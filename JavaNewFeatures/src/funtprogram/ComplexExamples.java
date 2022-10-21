@@ -2,6 +2,8 @@ package funtprogram;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public class ComplexExamples {
    
@@ -13,8 +15,22 @@ public class ComplexExamples {
 		
 		printTotalAges(users);
 		executeReduceOnParallelizedStream(users);
+		peekExample();
+		
 		
     }
+
+	private static void peekExample() {
+		System.out.println("In peekExample");
+		
+		List<String> result =
+			Stream.of("one", "two", "three", "four")
+	        .filter(e -> e.length() > 3)
+	        .peek(e -> System.out.println("Filtered value: " + e))
+	        .map(String::toUpperCase)
+	        .peek(e -> System.out.println("Mapped value: " + e))
+	        .collect(Collectors.toList());
+	}
 
 	private static void printTotalAges(List<User> users) {
 

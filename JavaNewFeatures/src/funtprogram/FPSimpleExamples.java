@@ -1,6 +1,7 @@
 package funtprogram;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class FPSimpleExamples {
 
@@ -43,6 +44,18 @@ public class FPSimpleExamples {
 
 	}
 
+	private static void returnOddNumbers(List<Integer> numbers) {
+		
+		  System.out.println("Odd Numbers : ");
+		  List<Integer> retList = 
+			  numbers.stream()
+			       .filter(number -> number % 2 != 0)
+			       .collect(Collectors.toList());
+		  	    
+		 System.out.printf("RetList : %s", retList);
+	}
+	
+	
 	private static void printSqureofEvenNumbers(List<Integer> numbers) {
 
 		System.out.println("Square Of Odd Numbers : ");
