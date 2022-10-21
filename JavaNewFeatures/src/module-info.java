@@ -1,0 +1,9 @@
+/**
+ * 
+ */
+/**
+ * @author egelirli
+ *
+ */
+module JavaNewFeatures {
+}
