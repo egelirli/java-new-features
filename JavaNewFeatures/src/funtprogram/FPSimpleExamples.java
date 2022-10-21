@@ -2,7 +2,7 @@ package funtprogram;
 
 import java.util.List;
 
-public class FPExamples {
+public class FPSimpleExamples {
 
 	public static void main(String[] args) {
 		List<Integer> numList = List.of(2, 3, 7, 19, 4, 2, 12, 16, 17);
