@@ -11,7 +11,13 @@ public class FPSimpleExamples {
 		// printOddNumbers(numList);
 		// printSqureofEvenNumbers(numList);
 		// printSumOfEvenNumbers(numList);
-		printMaxOdd(numList);
+		//printMaxOdd(numList);
+		printDistcintSortedNumbers(numList);
+	}
+
+	private static void printDistcintSortedNumbers(List<Integer> numList) {
+		numList.stream().distinct().sorted().forEach(System.out::println);
+		
 	}
 
 	private static void printMaxOdd(List<Integer> numList) {
