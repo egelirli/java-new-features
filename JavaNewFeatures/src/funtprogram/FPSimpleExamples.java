@@ -12,7 +12,25 @@ public class FPSimpleExamples {
 		// printSqureofEvenNumbers(numList);
 		// printSumOfEvenNumbers(numList);
 		//printMaxOdd(numList);
-		printDistcintSortedNumbers(numList);
+		//printDistcintSortedNumbers(numList);
+		//System.out.print(doubleTheList(numList));
+		System.out.print(createTheListWithDistinctEvenNumberSquares(numList));
+		
+	}
+
+	private static List<Integer> createTheListWithDistinctEvenNumberSquares(List<Integer> numList) {
+		return numList.stream().
+			   distinct().
+		       filter(num->num %2 == 0).
+		       map(num -> num * num).
+		       collect(Collectors.toList());   
+	}
+
+	private static List<Integer> doubleTheList(List<Integer> numList) {
+		return numList.stream().
+				map(num->  num*num).
+				collect(Collectors.toList());
+		
 	}
 
 	private static void printDistcintSortedNumbers(List<Integer> numList) {
