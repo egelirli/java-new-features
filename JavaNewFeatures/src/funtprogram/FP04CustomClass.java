@@ -89,6 +89,7 @@ public class FP04CustomClass {
 		.sum());
 		//total number of student whoses courses scores greater than %95: 88000
 		
+		
 		System.out.println(""
 				+ "Average number of student whoses courses scores greater than %95: " + 
 		courses.stream()
