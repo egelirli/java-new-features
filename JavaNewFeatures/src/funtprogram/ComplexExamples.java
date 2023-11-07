@@ -1,5 +1,6 @@
 package funtprogram;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -13,7 +14,8 @@ public class ComplexExamples {
 		
 		List<User> users = Arrays.asList(new User("John", 30), new User("Julie", 35));
 		
-		printTotalAges(users);
+		getAllAgesAsArrayList(users);
+		printTotalAges1(users);
 		executeReduceOnParallelizedStream(users);
 		peekExample();
 		
@@ -32,6 +34,24 @@ public class ComplexExamples {
 	        .collect(Collectors.toList());
 	}
 
+	private static void printTotalAges1(List<User> users) {
+		Integer totalAge = 
+				users.stream().
+				mapToInt(User::getAge).	
+				sum();
+		System.out.println("Total Age : " +  totalAge);
+	
+	}
+
+	private static void getAllAgesAsArrayList(List<User> users) {
+		ArrayList<Integer> ageList = 
+				users.stream().
+				mapToInt(User::getAge).	
+				collect(ArrayList::new,ArrayList::add,  ArrayList::addAll);
+		System.out.println("Age Array List: " +  ageList.toString());
+	}
+	
+	
 	private static void printTotalAges(List<User> users) {
 
 //		int computedAges = 

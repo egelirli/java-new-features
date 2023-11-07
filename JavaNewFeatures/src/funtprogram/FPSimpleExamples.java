@@ -1,6 +1,8 @@
 package funtprogram;
 
+import java.util.Comparator;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 public class FPSimpleExamples {
@@ -15,7 +17,7 @@ public class FPSimpleExamples {
 		//printDistcintSortedNumbers(numList);
 		//System.out.print(doubleTheList(numList));
 		System.out.print(createTheListWithDistinctEvenNumberSquares(numList));
-		
+		printMaxOdd(numList);
 	}
 
 	private static List<Integer> createTheListWithDistinctEvenNumberSquares(List<Integer> numList) {
@@ -39,13 +41,18 @@ public class FPSimpleExamples {
 	}
 
 	private static void printMaxOdd(List<Integer> numList) {
-		int max = numList.stream().
-				filter(a -> a % 2 != 0).
-				reduce(0, (a, b) -> a > b ? a : b);
+//		int max = numList.stream().
+//				filter(a -> a % 2 != 0).
+//				reduce(0, (a, b) -> a > b ? a : b);
 
-		System.out.printf("Max Odd : %d", max);
+		Optional<Integer> max = numList.stream().
+				filter(a -> a % 2 != 0).
+				max(Comparator.naturalOrder());
+		
+		System.out.printf("Max Odd : %d\n", max.get());
 
 	}
+
 
 	private static void printSumOfEvenNumbers(List<Integer> numList) {
 		int sum = numList.stream()
