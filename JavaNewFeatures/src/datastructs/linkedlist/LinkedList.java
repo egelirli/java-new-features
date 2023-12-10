@@ -27,6 +27,7 @@ public class LinkedList {
 	        
 	       // testReverse(myLinkedList);
 	        testRemoveLast(myLinkedList);
+	        test
 
 	}
 
@@ -196,6 +197,28 @@ public class LinkedList {
 		
 	}
 
+	
+	
+	private static void testSplit(LinkedList myLinkedList, int x ) {
+	       System.out.println("LL before split() - x: " + x);
+	        myLinkedList.printList();
+
+	        myLinkedList.split(myLinkedList, x);
+
+	        System.out.println("\nLL after split():");
+	        myLinkedList.printList();
+		
+		
+	}
+
+	private void split(LinkedList myLinkedList, int x) {
+		
+		  Node prev =   myLinkedList.head;
+		  Node next =   myLinkedList.head;
+		  
+		   
+		
+	}
 
 
 	
