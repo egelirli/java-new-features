@@ -27,7 +27,6 @@ public class LinkedList {
 	        
 	       // testReverse(myLinkedList);
 	        testRemoveLast(myLinkedList);
-	        test
 
 	}
 
