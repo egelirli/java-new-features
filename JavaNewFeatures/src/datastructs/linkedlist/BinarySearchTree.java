@@ -32,6 +32,7 @@ public class BinarySearchTree {
 	        myBST.insert(52);
 	        myBST.insert(82);
 
+
 	        System.out.println("Breadth First Search:");
 	        System.out.println( myBST.traverseTreeBreadthFirst() );
 
@@ -182,6 +183,7 @@ public class BinarySearchTree {
 		
 	}
 
+
 	public List traverseTreeDepthFirst_PreOrder(){
 		
 		List<Integer> retList = new ArrayList<>();
@@ -244,4 +246,5 @@ public class BinarySearchTree {
 
 	
 	
+
 }
