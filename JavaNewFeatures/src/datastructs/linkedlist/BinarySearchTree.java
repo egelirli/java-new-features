@@ -5,6 +5,7 @@ import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Queue;
+import java.util.Stack;
 import java.util.concurrent.LinkedBlockingQueue;
 
 public class BinarySearchTree {
@@ -32,13 +33,16 @@ public class BinarySearchTree {
 	        myBST.insert(52);
 	        myBST.insert(82);
 
-
-	        System.out.println("Breadth First Search:");
-	        System.out.println( myBST.traverseTreeBreadthFirst() );
-
-	        System.out.println("\nDepth First Search - Pre Order:");
-	        System.out.println( myBST.traverseTreeDepthFirst_PreOrder() );
-
+	        System.out.println("BST Contains 52:");
+	        System.out.println(myBST.contains(52));
+	        
+	        
+//	        System.out.println("Breadth First Search:");
+//	        System.out.println( myBST.traverseTreeBreadthFirst() );
+//
+//	        System.out.println("\nDepth First Search - Pre Order:");
+//	        System.out.println( myBST.traverseTreeDepthFirst_PreOrder() );
+//
 	        System.out.println("\nDepth First Search - Post Order:");
 	        System.out.println( myBST.traverseTreeDepthFirst_PostOrder() );
 	        
@@ -54,7 +58,9 @@ public class BinarySearchTree {
 	}
 	
 	
-    public boolean insert(int value) {
+
+
+	public boolean insert(int value) {
         Node newNode = new Node(value);
         if (root == null) {
             root = newNode;
@@ -102,6 +108,25 @@ public class BinarySearchTree {
 //	}
 	
 	
+	
+    private boolean contains(int num) {
+		boolean ret = false;
+    	
+		Node curNode = root;
+		while(curNode != null) {
+		     if(curNode.value == num) {
+				 ret = true;
+				 break;
+			 }else if(num < curNode.value){
+			     curNode = curNode.left;
+			 }else {
+				 curNode = curNode.right; 
+			 }
+		}
+    	
+    	return ret;
+	}
+
 	public void deleteNode(int val) {
 		
 		 deleteNode(root, val);
@@ -219,8 +244,10 @@ public class BinarySearchTree {
 	public List traverseTreeDepthFirst_PostOrder(){
 		
 		List<Integer> retList = new ArrayList<>();
-		traverseTreeDepthFirst_PostOrder(root,retList);
-		
+		Stack<Node> stack = new Stack<>();
+		stack.push(root);
+		//traverseTreeDepthFirst_PostOrder(stack, retList);
+		traverseTreeDepthFirst_PostOrder(root, retList);
 		return retList;
 		//System.out.printf("List : %s ", retList.toString());
 		
@@ -228,23 +255,51 @@ public class BinarySearchTree {
 
 
 	private void traverseTreeDepthFirst_PostOrder(
-			           Node currNode, List<Integer> retList) {
+					   Stack<Node> stack,
+			           List<Integer> retList) {
 	   
-	   if(currNode == null) {
-		   System.out.println("Return");
-			return;
-	    }
-		   
-	   if((currNode.left == null) && (currNode.right == null)) {
-		   retList.add(currNode.value);   
+	   Node currNode = stack.peek();
+	   System.out.println("currNode : " + currNode.value );
+	   
+		
+	   if(currNode.left == null) {
+		   retList.add(currNode.value);
+		   stack.pop();
+	   }else {
+		   stack.push(currNode.left);
+		   traverseTreeDepthFirst_PostOrder(stack, retList);
 	   }
-	   traverseTreeDepthFirst_PreOrder(currNode.left,retList);
-	   traverseTreeDepthFirst_PreOrder(currNode.right,retList);
-	   //retList.add(currNode.value);
+		   
+	   if(currNode.right != null) {
+		   stack.push(currNode.right);
+		   traverseTreeDepthFirst_PostOrder(stack, retList);
+	   }
 
+	   if(currNode.left != null) {
+		   retList.add(currNode.value); 
+	   }
+	   
 	}
 
-	
+	private void traverseTreeDepthFirst_PostOrder(Node currNode, 
+												  List<Integer> retList) {
+
+		
+		if(currNode == null) return;
+		System.out.println("currNode : " + currNode.value);
+
+		
+		if (currNode.left != null) {
+			traverseTreeDepthFirst_PostOrder(currNode.left, retList);
+		} 
+
+		if (currNode.right != null) {
+			traverseTreeDepthFirst_PostOrder(currNode.right, retList);
+		}
+		
+		retList.add(currNode.value);
+		
+	}	
 	
 
 }
