@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.Queue;
 import java.util.Stack;
 import java.util.concurrent.LinkedBlockingQueue;
+import java.util.concurrent.atomic.AtomicInteger;
 
 public class BinarySearchTree {
 
@@ -48,6 +49,12 @@ public class BinarySearchTree {
 	        
 	        System.out.println("\nDepth First Search - In Order:");
 	        System.out.println( myBST.traverseTreeDepthFirst_InOrder() );
+            
+	        int k = 5;
+	        System.out.printf("\nkth smallest : k: %d min: %s", k, myBST.kthSmallest(k));
+	        //System.out.println( myBST.kthSmallest(1) );
+
+	        
 	        /*
 	            EXPECTED OUTPUT:
 	            ----------------
@@ -313,14 +320,58 @@ public class BinarySearchTree {
 		System.out.println("currNode : " + currNode.value);
 
 		if (currNode.left != null) {
-			traverseTreeDepthFirst_PostOrder(currNode.left, retList);
+			traverseTreeDepthFirst_InOrder(currNode.left, retList);
 		}
 		retList.add(currNode.value);
 		
 		if (currNode.right != null) {
-			traverseTreeDepthFirst_PostOrder(currNode.right, retList);
+			traverseTreeDepthFirst_InOrder(currNode.right, retList);
 		}
 		
 	}
+	
+	
+	public Integer kthSmallest(int k) {
+		
+		//List<Integer> retList = new ArrayList<>();
+		AtomicInteger min = new AtomicInteger(0);
+		
+		 kthSmallest(root, k, new AtomicInteger(0), min);
+		 return min.get(); 
+		 
+		
+	}
 
+
+
+
+	private Integer kthSmallest(Node currNode, 
+								int k, 
+								AtomicInteger i, 
+								AtomicInteger min ) {
+		
+//		if (min != null)
+//			return min.get();
+		System.out.println("atbegin currNode : " + currNode.value);
+
+		if (currNode.left != null) {
+			kthSmallest(currNode.left, k,i, min);
+		}
+		
+		i.addAndGet(1);
+		System.out.printf("middle  currNode : %d  i:%d \n",currNode.value, i.get());
+		if(k == i.get()) {
+			min.set(currNode.value);
+			System.out.printf("  return  min :%d \n", min.get());
+			return min.get();
+		}
+		
+		if (currNode.right != null) {
+			kthSmallest(currNode.right, k,i, min);
+		}
+		
+		return null;
+	}
+	
+	
 }
