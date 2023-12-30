@@ -41,7 +41,28 @@ public class RotateArray {
         */	
     }
 
+
 	private static void rotate(int[] arr, int k) {
+		
+		System.out.println("");
+		System.out.printf("rotate - Array: %s k:%d \n",  Arrays.toString(arr), k);
+		   //Rotate the given array by n times toward right    
+        for(int i = 0; i < k; i++){    
+            int j, last;    
+            //Stores the last element of array    
+            last = arr[arr.length-1];    
+            
+            for(j = arr.length-1; j > 0; j--){    
+                //Shift element of array by one    
+                arr[j] = arr[j-1];    
+            }    
+            //Last element of array will be added to the start of array.    
+            arr[0] = last;    
+        }    
+	}
+
+	
+	private static void rotateOLD(int[] arr, int k) {
 		
 		System.out.println("");
 		System.out.printf("rotate - Array: %s k:%d \n",  Arrays.toString(arr), k);
@@ -52,14 +73,12 @@ public class RotateArray {
 			for(int j=k+i; j < arr.length+k; j += k ) {
 				   int l = j%(arr.length);
 				   int tmp = arr[l];
-				   System.out.printf("  j : %d tmp: %d\n",j, tmp);
+				   System.out.printf("  j : %d l:%d tmp: %d\n",j,l, tmp);
 				   arr[l]  = arr[i];
 				   arr[i] = tmp;
 			 }
 			
 		}
-		//System.out.printf("rotate - Returns Array: %s  \n",  Arrays.toString(arr));
-		//System.out.println("");
 	}
 	
 }
