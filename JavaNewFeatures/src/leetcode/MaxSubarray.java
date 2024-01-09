@@ -8,7 +8,8 @@ public class MaxSubarray {
 //        int[] inputCase0 = {1, -2, -3,};
 //        int result0 = maxSubarray(inputCase0);
 //        System.out.println("Example 0: Input: " + Arrays.toString(inputCase0) + "\nResult: " + result0); 
-
+    	
+    	
         // Example 1: Simple case with positive and negative numbers
         int[] inputCase1 = {-2, 1, -3, 4, -1, 2, 1, -5, 4};
         int result1 = maxSubarray(inputCase1);
