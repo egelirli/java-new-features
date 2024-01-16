@@ -9,7 +9,7 @@ import java.util.concurrent.locks.ReentrantLock;
 public class SemaphoreBarrier {
 
 	public static void main(String [] args) throws InterruptedException {
-	    int numberOfThreads = 10; //or any number you'd like 
+	    int numberOfThreads = 3; //or any number you'd like 
 	 
 	    List<Thread> threads = new ArrayList<>();
 	 
@@ -26,7 +26,7 @@ public class SemaphoreBarrier {
 	public static class Barrier {
 	    private final int numberOfWorkers;
 	    private final Semaphore semaphore = 
-	    		new Semaphore( 10); //** blank 1 **/);
+	    		new Semaphore( 0); //** blank 1 **/);
 	    private int counter = 0;//** blank 2 **/;
 	    private final Lock lock = new ReentrantLock();
 	 
@@ -36,20 +36,31 @@ public class SemaphoreBarrier {
 	 
 	    public void waitForOthers() throws InterruptedException {
 	        lock.lock();
+	        System.out.println(Thread.currentThread().getName() 
+	                + " after lock");
+
 	        boolean isLastWorker = false;
 	        try {
 	            counter++;
+		        System.out.println(Thread.currentThread().getName() 
+		                + " counter++ " + counter);
 	 
 	            if (counter == numberOfWorkers) {
 	                isLastWorker = true;
 	            }
 	        } finally {
+		        System.out.println(Thread.currentThread().getName() 
+		                + " before unlock ");
 	            lock.unlock();
 	        }
 	 
 	        if (isLastWorker) {
-	            semaphore.release(10);//** blank 3 **/);
+		        System.out.println(Thread.currentThread().getName() 
+		                + " before  release");
+	            semaphore.release(2);//** blank 3 **/);
 	        } else {
+		        System.out.println(Thread.currentThread().getName() 
+		                + " before  acquire");
 	            semaphore.acquire();          
 	        }
 	    }
