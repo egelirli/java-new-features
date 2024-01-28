@@ -2,14 +2,18 @@ package threads;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.locks.Lock;
+import java.util.concurrent.locks.ReentrantLock;
 
 import threads.SemaphoreBarrier.Barrier;
 import threads.SemaphoreBarrier.CoordinatedWorkRunner;
 
 public class SimpleCountDownLatch {
 	 private int count;
+	 //private Object countLock = new Object();
+	 private final Lock countLock = new ReentrantLock();
 	 
-		public static void main(String [] args) throws InterruptedException {
+	  public static void main(String [] args) throws InterruptedException {
 		    int numberOfThreads = 3; //or any number you'd like 
 		 
 		    List<Thread> threads = new ArrayList<>();
@@ -25,6 +29,8 @@ public class SimpleCountDownLatch {
 		}
 		
 	    public SimpleCountDownLatch(int count) {
+	    	System.out.printf("In SimpleCountDownLatch - %s -  count : %d \n", 
+	    								Thread.currentThread().getName(),count);
 	        this.count = count;
 	        if (count < 0) {
 	            throw new IllegalArgumentException("count cannot be negative");
@@ -35,16 +41,27 @@ public class SimpleCountDownLatch {
 	     * Causes the current thread to wait until the latch has counted down to zero.
 	     * If the current count is already zero then this method returns immediately.
 	    */
-	    public void await() throws InterruptedException {
+	    public  void await() throws InterruptedException {
 	        /**
 	         * Fill in your code
 	         */
-	    	if(count > 0) {
-                try {
-                    wait();
-                } catch (InterruptedException e) {
-                }
-	    	}
+	    	
+	    	synchronized (countLock) {
+		    	while(count > 0) {
+		    		System.out.printf("In await - before wait- %s -  count %d \n", 
+		    				Thread.currentThread().getName(), count);
+		    		wait();
+		    	}
+		    	System.out.printf("In await - after wait- %s -  count %d \n", 
+		    							Thread.currentThread().getName(), count);
+	//	    	if(count > 0) {
+	//                try {
+	//                    wait();
+	//                } catch (InterruptedException e) {
+	//                }
+	//	    	}
+			}
+
 	    	
 	    }
 
@@ -52,21 +69,26 @@ public class SimpleCountDownLatch {
 	     *  Decrements the count of the latch, releasing all waiting threads when the count reaches zero. 
 	     *  If the current count already equals zero then nothing happens.
 	     */
-	    public synchronized void countDown() {
+	    public  void countDown() {
 	        /**
 	         * Fill in your code
 	         */
 	    	
-	    	count--;
-	    	if(count <= 0) {
-	    		notifyAll();
+	    	synchronized (countLock) {
+		    	count--;
+		    	System.out.printf("In countDown - %s -  count : %d \n", 
+		    							Thread.currentThread().getName(), count);
+		    	if(count <= 0) {
+		    		notifyAll();
+		    	}
 	    	}
+
 	    }
 
 	    /**
 	     * Returns the current count.
 	    */
-	    public synchronized int getCount() {
+	    public int getCount() {
 	        /**
 	         * Fill in your code
 	         */
