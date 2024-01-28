@@ -29,8 +29,8 @@ public class SimpleCountDownLatch {
 		}
 		
 	    public SimpleCountDownLatch(int count) {
-	    	System.out.printf("In SimpleCountDownLatch - %s -  count : %d \n", 
-	    								Thread.currentThread().getName(),count);
+//	    	System.out.printf("In SimpleCountDownLatch - %s -  count : %d \n", 
+//	    								Thread.currentThread().getName(),count);
 	        this.count = count;
 	        if (count < 0) {
 	            throw new IllegalArgumentException("count cannot be negative");
@@ -41,12 +41,12 @@ public class SimpleCountDownLatch {
 	     * Causes the current thread to wait until the latch has counted down to zero.
 	     * If the current count is already zero then this method returns immediately.
 	    */
-	    public  void await() throws InterruptedException {
+	    public synchronized void await() throws InterruptedException {
 	        /**
 	         * Fill in your code
 	         */
 	    	
-	    	synchronized (countLock) {
+	    	//synchronized (countLock) {
 		    	while(count > 0) {
 		    		System.out.printf("In await - before wait- %s -  count %d \n", 
 		    				Thread.currentThread().getName(), count);
@@ -54,13 +54,7 @@ public class SimpleCountDownLatch {
 		    	}
 		    	System.out.printf("In await - after wait- %s -  count %d \n", 
 		    							Thread.currentThread().getName(), count);
-	//	    	if(count > 0) {
-	//                try {
-	//                    wait();
-	//                } catch (InterruptedException e) {
-	//                }
-	//	    	}
-			}
+			//}
 
 	    	
 	    }
@@ -69,18 +63,18 @@ public class SimpleCountDownLatch {
 	     *  Decrements the count of the latch, releasing all waiting threads when the count reaches zero. 
 	     *  If the current count already equals zero then nothing happens.
 	     */
-	    public  void countDown() {
+	    public synchronized void countDown() {
 	        /**
 	         * Fill in your code
 	         */
 	    	
-	    	synchronized (countLock) {
+	    	//synchronized (countLock) {
 		    	count--;
 		    	System.out.printf("In countDown - %s -  count : %d \n", 
 		    							Thread.currentThread().getName(), count);
-		    	if(count <= 0) {
-		    		notifyAll();
-		    	}
+	    	//}
+	    	if(count <= 0) {
+	    		notifyAll();
 	    	}
 
 	    }
@@ -117,7 +111,7 @@ public class SimpleCountDownLatch {
 		        System.out.println(Thread.currentThread().getName() 
 		                + " part 1 of the work is finished");
 		        barrier.countDown();
-		        barrier.wait();
+		        barrier.await();
 		 
 		        // Performing Part2
 		        System.out.println(Thread.currentThread().getName() 
