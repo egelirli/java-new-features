@@ -1,4 +1,4 @@
-package threads;
+package threads.lockfree;
 
 /*
  * Copyright (c) 2019-2023. Michael Pogrebinsky - Top Developer Academy
